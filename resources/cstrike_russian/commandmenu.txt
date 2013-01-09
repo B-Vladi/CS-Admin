@@ -1,0 +1,67 @@
+﻿"1" "Админцентр" {
+  "1" "Забанить" "amx_bancsmenu"
+  "2" "Кикнуть" "amx_kickmenu"
+  "3" "Ударить/Убить" "amx_slapmenu"
+  "4" "AMX Fuckoff" "amx_clcmdmenu"
+  "5" "Сменить карту" "amx_mapmenu"
+  "6" "Голосовать за карту" "amx_votemapmenu"
+  "7" "Команда игрока" "amx_teammenu"
+  "8" "Запрет оружия" "amx_restmenu"
+}
+"2" "HLTV" {
+  "1" "Информация" {
+    "1" "Общая" "hltvStatus"
+    "2" "Наблюдатели" "hltvStatusClients"
+    "3" "Прокси" "hltvStatusProxies"
+  }
+  "2" "Демо" {
+    "1" "Старт" "hltvStartRecord"
+    "2" "Стоп" "hltvStopRecord"
+  }
+  "3" "Подключить" {
+    "1" "Public" "hltvConnectPublic"
+    "2" "ClanWar" "hltvConnectCW"
+  }
+  "4" "Остановить" "hltvStop"
+  "5" "Отключить" "hltvDisconnect"
+}
+"3" "Clanwar" {
+  "1" "Пароль" {
+    "1" "clanwar" "amx_cfg configs/set_pass.cfg"
+    "2" "Сбросить" "amx_cfg configs/reset_pass.cfg"
+  }
+  "2" "Warm Up" {
+    "1" "Включить" "amx_cfg configs/warmup_on.cfg"
+    "2" "Выключить" "amx_cfg configs/warmup_off.cfg"
+  }
+  "3" "3 Рестарта" "amx_cfg configs/restart_map_3x.cfg"
+}
+"4" "Информация" {
+  "1" "Статистика" {
+    "1" "hp, me, rank" "say /hp; say /me; say /rank;"
+    "2" "Игроков" "say /stats;"
+    "3" "На карте" "say /statsme;"
+    "4" "Общая" "say /rankstats;"
+    "5" "TOP 15" "say /top15;"
+    "6" "Сбросить" "statsReset;"
+  }
+  "2" "Motd" "say /admin"
+  "3" "Он-лайн игроки" "infoWho"
+  "4" "Последние игроки" "infoLast"
+}
+"5" "Разное" {
+  "1" "Послать сообщение" {
+    "1" "Всем" "sayAll"
+    "2" "Админам" "sayAdmin"
+  }
+  "2" "Рестарт" {
+    "1" "Карта" "amx_cfg configs/restart_map.cfg"
+    "2" "Сервер" "amx_cfg configs/restart_server.cfg"
+  }
+  TOGGLE "false" "3" "Тэг" "useTag"
+}
+"6" "Настройки" {
+  "1" "Правая рука" "cl_righthand 1"
+  "2" "Левая рука" "cl_righthand 0"
+}
+"7" "Закрыть" ""

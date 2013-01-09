@@ -1,0 +1,498 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>CS~console.ru | Документация: администрирование</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="img/cs.ico" rel="shortcut icon" type="image/x-icon" />
+	<link href="css/base.css" rel="stylesheet" type="text/css" />
+	<!--[if lte IE 6]>
+	<link href="css/ie6-.css" rel="stylesheet" media="screen" type="text/css" /><![endif]-->
+</head>
+<body>
+<a name="top" class="link_top">top</a>
+<div class="logo">
+	<div class="cs1">CS</div>
+	<div class="cs2">CS</div>
+	<div class="cs3">CS</div>
+</div>
+<div class="console">
+	<div class="con_0">~</div>
+	<div class="con_1">c</div>
+	<div class="con_2">o</div>
+	<div class="con_3">n</div>
+	<div class="con_4">s</div>
+	<div class="con_5">o</div>
+	<div class="con_6">l</div>
+	<div class="con_7">e</div>
+	<div class="con_8">.</div>
+	<div class="con_9">r</div>
+	<div class="con_10">u</div>
+</div>
+<div class="parent">
+<div class="rtop">
+	<div class="r14"></div>
+	<div class="r13"></div>
+	<div class="r12"></div>
+	<div class="r11"></div>
+	<div class="r10"></div>
+	<div class="r9"></div>
+	<div class="r8"></div>
+	<div class="r7"></div>
+	<div class="r6"></div>
+	<div class="r5"></div>
+	<div class="r4"></div>
+	<div class="r3"></div>
+	<div class="r2"></div>
+	<div class="r1"></div>
+	<div class="r0"></div>
+</div>
+<div class="content_contaner">
+<div class="navigation">
+	<a class="button" href="index.html">Общая информация</a>
+	<a class="button" href="rules.html">Правила</a>
+	<div class="button_active">Администрирование</div>
+	<a class="button" href="sources.html">Ресурсы</a>
+</div>
+<a href="#top" class="button button_back">Вверх</a>
+
+<div class="header">
+	<div class="path">Документация: <span>администрирование</span></div>
+</div>
+<div class="content">
+<div>Администрирование сервера осуществляется через GUI-меню (<em>Graphic User Interface</em>), которое при стандартных настройках отображается после нажатия на клавишу "<em>H</em>".<br /> Изменить клавишу можно в настройках игры (<em>Options - Keyboard - Activate in-game GUI</em>) либо через конфигурационные файлы (<em>.cfg, .rc</em>), используя команду
+	<em>+commandmenu</em>.<br /> Пример настройки:
+	<div class="code">bind "kp_enter" "+commandmenu";</div>
+</div>
+<div class="minCaption">Пункты меню:</div>
+<ul>
+<li><strong>Админцентр</strong> - основные меню администрирования сервера:<br /><br />
+<ul>
+<li><strong>Забанить</strong> - показать меню бана игроков.
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+		<tr>
+			<td>Пункт</td>
+			<td>Назначение</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="rFirst">1-6</td>
+			<td>Забанить игрока с соответствующим ником.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">7</td>
+			<td>Изменить причину бана. Доступные причины: "<em>Читер</em>", "<em>Спамер</em>", "<em>Лагер</em>", "<em>Флудер</em>", "<em>Неадекват</em>".</td>
+		</tr>
+		<tr>
+			<td class="rFirst">8</td>
+			<td>Изменить время бана. Доступные значения: "<em>Бан НАВСЕГДА</em>", "<em>Бан на 10 минут</em>", "<em>Бан на 30 минут</em>", "<em>Бан на 60 минут</em>", "<em>Бан на 120 минут</em>".
+			</td>
+		</tr>
+		<tr>
+			<td class="rFirst">9</td>
+			<td>Переключить на следующих игроков.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">0</td>
+			<td>Закрыть меню.</td>
+		</tr>
+		</tbody>
+	</table>
+	<div>Для того чтобы снять бан с игрока, необходимо набрать в консоли:
+		<div class="code">amx_unbancs "ник игрока"</div>
+		, затем войти в <a href="http://amx.cs-console.ru/" target="_blank">Web-панель администрирования</a> и удалить бан там.
+	</div>
+	<br />
+</li>
+<li><strong>Кикнуть</strong> - показать меню кика игрока.
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+		<tr>
+			<td>Пункт</td>
+			<td>Назначение</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="rFirst">1-8</td>
+			<td>Кикнуть игрока с соответствующим ником.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">9</td>
+			<td>Переключить на следующих игроков.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">0</td>
+			<td>Закрыть меню.</td>
+		</tr>
+		</tbody>
+	</table>
+</li>
+<li><strong>Ударить/Убить</strong> - показать меню наказания игрока (убийство или удар).
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+		<tr>
+			<td>Пункт</td>
+			<td>Назначение</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="rFirst">1-7</td>
+			<td>Применить к игроку с соответствующим ником выбранное наказание.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">8</td>
+			<td>Изменить тип наказания. Доступные типы: "<em>Убить</em>", "<em>Стукнуть на 0 HP</em>", "<em>Стукнуть на 1 HP</em>", "<em>Стукнуть на 5 HP</em>". Удары отнимают у выбранного игрока соответствующее количество процентов от здоровья.
+			</td>
+		</tr>
+		<tr>
+			<td class="rFirst">9</td>
+			<td>Переключить на следующих игроков.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">0</td>
+			<td>Закрыть меню.</td>
+		</tr>
+		</tbody>
+	</table>
+</li>
+<li><strong>AMX Fuckoff</strong> - показать меню сильных наказаний для игроков.
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+		<tr>
+			<td>Пункт</td>
+			<td>Назначение</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="rFirst">1-7</td>
+			<td>Применить выбранное наказание к игроку с соответствующим ником.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">8</td>
+			<td>Изменить тип наказания. Доступные наказания: "<em>Самоубийство</em>" (изменяет все клавиши так, что при нажатии на них, выбранный игрок умирает), "<em>Сбить настройки</em>" (изменяет настройки выбранного игрока, задавая им случайные значения), "<em>Создать лаги</em>" (понижает fps и повышает пинг у выбранного игрока), "<em>Кружить</em>" (заставляет выбранного игрока кружиться вокруг своей оси), "<em>Летать</em>" (заставляет выбранного игрока летать по карте без возможности управления передвижением), "<em>Забить HDD</em>" (заставляет игрока постоянно делать снимки с экрана до тех пор, пока у него не останется места на жестком диске), "<em>Всё вместе</em>" (применяет к выбранному игроку все предыдущие наказания), "<em>Отменить всё</em>" (отменяет все наказания для выбранного игрока).
+			</td>
+		</tr>
+		<tr>
+			<td class="rFirst">9</td>
+			<td>Переключить на следующих игроков.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">0</td>
+			<td>Закрыть меню.</td>
+		</tr>
+		</tbody>
+	</table>
+</li>
+<li><strong>Сменить карту</strong> - показать меню смены карты.
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+		<tr>
+			<td>Пункт</td>
+			<td>Назначение</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="rFirst">1-8</td>
+			<td>Изменить соответствующую карту на сервере.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">9</td>
+			<td>Переключить на следующие карты.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">0</td>
+			<td>Закрыть меню.</td>
+		</tr>
+		</tbody>
+	</table>
+</li>
+<li><strong>Голосование за карту</strong> - показать меню голосования за карту.
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+		<tr>
+			<td>Пункт</td>
+			<td>Назначение</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="rFirst">1-7</td>
+			<td>Добавить соответствующие карты в список для голосования. Максимальное количество карт в списке - 4, минимальное - 1.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">8</td>
+			<td>Запустить голосование из выбранных карт.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">9</td>
+			<td>Переключить на следующие карты.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">0</td>
+			<td>Закрыть меню.</td>
+		</tr>
+		</tbody>
+	</table>
+</li>
+<li><strong>Команда игрока</strong> - показать меню смены команды игроков.
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+		<tr>
+			<td>Пункт</td>
+			<td>Назначение</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="rFirst">1-7</td>
+			<td>Переместить соответствующего игрока за выбранную команду.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">8</td>
+			<td>Изменить команду, за которую следует перемещать игроков. Доступные значения: "<em>Переместить за TERRORIST</em>", "<em>Переместить за CT</em>", "<em>Переместить за SPECTATOR</em>".
+			</td>
+		</tr>
+		<tr>
+			<td class="rFirst">9</td>
+			<td>Переключить на следующих игроков.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">0</td>
+			<td>Закрыть меню.</td>
+		</tr>
+		</tbody>
+	</table>
+</li>
+<li><strong>Запрет оружия</strong> - показать меню запрета покупки оружия.
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+		<tr>
+			<td>Пункт</td>
+			<td>Назначение</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="rFirst">1-7</td>
+			<td>Включить либо выключить запрет для соответствующего оружия. Справа отображается текущий статут запрета (<em>ВКЛ/ВЫКЛ</em>).</td>
+		</tr>
+		<tr>
+			<td class="rFirst">8</td>
+			<td>Сохранить настройки.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">9</td>
+			<td>Переключить на следующие оружия.</td>
+		</tr>
+		<tr>
+			<td class="rFirst">0</td>
+			<td>Закрыть меню.</td>
+		</tr>
+		</tbody>
+	</table>
+</li>
+</ul>
+</li>
+<li><strong>HLTV</strong> - команды для HLTV:<br /><br />
+	<ul>
+		<li><strong>Информация</strong> - просмотр информации HLTV:<br /><br />
+			<ul>
+				<li>
+					<strong>Общая</strong> - вывести в консоль общую информацию, такую как: версия, IP, FPS, сетевую статистику, количество подключенных наблюдателей и прокси.<br /><br />
+				</li>
+				<li><strong>Наблюдатели</strong> - вывести в консоль подробную информацию о подключенных наблюдателях.<br /><br /></li>
+				<li><strong>Прокси</strong> - вывести в консоль подробную информацию о подключенных прокси-серверах.<br /><br /></li>
+			</ul>
+		</li>
+		<li><strong>Демо</strong> - управление демо файлами:<br /><br />
+			<ul>
+				<li><strong>Start</strong> - начать запись демо. В правом верхнем углу отображается результат выполнения команды:
+					<table cellpadding="0" cellspacing="0">
+						<thead>
+						<tr>
+							<td>Сообщение</td>
+							<td>Значение</td>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>Recording initialized.</td>
+							<td>Запись демо началась.</td>
+						</tr>
+						<tr>
+							<td>Already recording to demo/имя_файла.dem.</td>
+							<td>В данный момент записывается демо с именем <em>имя_файла.dem</em>.</td>
+						</tr>
+						</tbody>
+					</table>
+				</li>
+				<li><strong>Stop</strong> - остановить запись демо. В правом верхнем углу отображается результат выполнения команды:
+					<table cellpadding="0" cellspacing="0">
+						<thead>
+						<tr>
+							<td>Сообщение</td>
+							<td>Значение</td>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>Completed demo demo/имя_файла.dem.</td>
+							<td>Запись демо с именем <em>имя_файла.dem</em> успешно завершено.</td>
+						</tr>
+						<tr>
+							<td>Not recording.</td>
+							<td>В данный момент демо не записывается.</td>
+						</tr>
+						</tbody>
+					</table>
+					<div>Имена для файлов создаются автоматически. Формат имени:
+						<em>HLTV-ггммддччмм-имя_карты.dem</em> (последние 2 цифры года, месяц, день, часы, минуты).
+					</div>
+					<div>Все созданные демо доступны из корневой папки <a href="ftp://cs-console.ru/" target="_blank">FTP-хранилища</a>.</div>
+					<br /></li>
+			</ul>
+		</li>
+		<li>
+			<strong>Подключить</strong> - подключить HLTV к серверу. Все подключенные наблюдатели и прокси переключатся вместе с HLTV. Записывающиеся демо так же будут переключены.<br /><br />
+			<ul>
+				<li><strong>ClanWar</strong> - подключить к серверу <a href="steam://connect/cw.cs-console.ru/">cw.cs-console.ru</a>.<br /><br /></li>
+				<li><strong>Public</strong> - подключить к серверу <a href="steam://connect/cs-console.ru/">cs-console.ru</a>.<br /><br /></li>
+			</ul>
+		</li>
+		<li>
+			<strong>Остановить</strong> - остановить HLTV. Подключенные наблюдатели и прокси не будут отключены. Записывающиеся демо будут приостановлены и возобновлены при следующем подключении к серверу.<br /><br />
+		</li>
+		<li><strong>Отключить</strong> - отключить HLTV, сбросить всех наблюдателей и прокси, завершить запись демо.<br /><br /></li>
+	</ul>
+</li>
+<li><strong>Clanwar</strong> - управление ClanWar-сервером:<br /><br />
+	<ul>
+		<li><strong>Пароль</strong> - установка пароля на сервер:<br /><br />
+			<ul>
+				<li><strong>clanwar</strong> - установить пароль clanwar.<br /><br /></li>
+				<li><strong>Сбросить</strong> - снять пароль с сервера.<br /><br /></li>
+			</ul>
+		</li>
+		<li><strong>Warm Up</strong> - Режим Warm Up:<br /><br />
+			<ul>
+				<li><strong>Включить</strong> - установить режим Warm Up.<br /><br /></li>
+				<li><strong>Выключить</strong> - снять режим Warm Up.<br /><br /></li>
+			</ul>
+		</li>
+		<li><strong>3 Рестарта</strong> - сделать 3 рестарта карты и загрузить стандартый конфиг (отключенный режим Warm Up).<br /><br /></li>
+	</ul>
+</li>
+<li><strong>Информация</strong> - просмотр информации сервера:<br /><br />
+	<ul>
+		<li><strong>Статистика</strong> - статистика игры (только для public-сервера):<br /><br />
+			<ul>
+				<li><strong>hp, me, rank</strong> - показать текущую статистику:
+					<div class="code">say "/hp"; say "/me"; say "/rank";</div>
+				</li>
+				<li><strong>Игроков</strong> - показать меню просмотра статистики игроков, присутствующих на сервере.
+					<table cellpadding="0" cellspacing="0">
+						<thead>
+						<tr>
+							<td>Пункт</td>
+							<td>Назначение</td>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td class="rFirst">1-7</td>
+							<td>Отобразить выбранный тип статистики для соответствующего игрока.</td>
+						</tr>
+						<tr>
+							<td class="rFirst">8</td>
+							<td>Изменить тип отображаемой статистики. Доступные типы: "<em>Статистика на карте</em>", "<em>Общая статистика</em>".</td>
+						</tr>
+						<tr>
+							<td class="rFirst">9</td>
+							<td>Переключить на следующих игроков.</td>
+						</tr>
+						<tr>
+							<td class="rFirst">0</td>
+							<td>Закрыть меню.</td>
+						</tr>
+						</tbody>
+					</table>
+				</li>
+				<li><strong>На карте</strong> - показать вашу статистику на карте:
+					<div class="code">say "/statsme";</div>
+				</li>
+				<li><strong>Общая</strong> - показать вашу общую статистику:
+					<div class="code">say "/rankstats";</div>
+				</li>
+				<li><strong>TOP 15</strong> - показать 15 лучших игроков сервера:
+					<div class="code">say "/top15";</div>
+				</li>
+				<li><strong>Сбросить</strong> - Сбросить статистику. При выполнении этой команды автоматически перезагружается сервер.<br /><br /></li>
+			</ul>
+		</li>
+		<li><strong>Motd</strong> - показать окно приветствия, показываемое игрокам при подключении к серверу.<br /><br /></li>
+		<li>
+			<strong>Он-лайн игроки</strong> - показать в консоли список игроков, находящихся на сервере. Список выглядит в виде таблицы, содержащей информацию о игроках: id авторизации на сервере, ник, steam id, общий id на сервере, наличие флага a, наличие флага c и права.<br /><br />
+		</li>
+		<li>
+			<strong>Последние игроки</strong> - вывести в консоли список нескольких последних игроков, присутствовавших на сервере. Список выглядит в виде таблицы, содержащей информацию о игроках: ник, steam id, ip-адрес и права.<br /><br />
+		</li>
+	</ul>
+</li>
+<li><strong>Разное</strong> - различные команды управления сервером:<br /><br />
+	<ul>
+		<li><strong>Послать сообщение</strong> - различные режимы посылки сообщения в чат:<br /><br />
+			<ul>
+				<li>
+					<strong>Всем</strong> - послать сообщение для всех игроков без указания вашей команды. После выбора пункта необходимо ввести сообщение (вводимые символы отображаются в левом верхнем углу экрана), затем нажать enter для отправки или escape для отмены.<br /><br />
+				</li>
+				<li>
+					<strong>Админам</strong> - послать сообщение только администраторам. После выбора пункта необходимо ввести сообщение (вводимые символы отображаются в левом верхнем углу экрана), затем нажать enter для отправки или escape для отмены.<br /><br />
+				</li>
+			</ul>
+		</li>
+		<li><strong>Рестарт</strong> - сделать рестарт:<br /><br />
+			<ul>
+				<li><strong>Карта</strong> - карты.<br /><br /></li>
+				<li><strong>Сервер</strong> - сервера.<br /><br /></li>
+			</ul>
+		</li>
+		<li><strong>Тэг</strong> - добавить или убрать тег команды для вашего ника.<br /><br /></li>
+	</ul>
+</li>
+<li><strong>Настройки</strong> - основные клиентские настройки:<br /><br />
+	<ul>
+		<li><strong>Правая рука</strong> - устанавить оружие в правую руку.<br /><br /></li>
+		<li><strong>Левая рука</strong> - устанавить оружие в левую руку.<br /><br /></li>
+	</ul>
+</li>
+<li><strong>Закрыть</strong> - закрыть меню.</li>
+</ul>
+</div>
+</div>
+<div class="rbottom">
+	<div class="r0"></div>
+	<div class="r1"></div>
+	<div class="r2"></div>
+	<div class="r3"></div>
+	<div class="r4"></div>
+	<div class="r5"></div>
+	<div class="r6"></div>
+	<div class="r7"></div>
+	<div class="r8"></div>
+	<div class="r9"></div>
+	<div class="r10"></div>
+	<div class="r11"></div>
+	<div class="r12"></div>
+	<div class="r13"></div>
+	<div class="r14"></div>
+</div>
+<div class="copyright">&copy; <a href="http://cs-console.ru" target="_blank">CS~console.ru</a></div>
+</div>
+<div class="footer"></div>
+</body>
+</html>
