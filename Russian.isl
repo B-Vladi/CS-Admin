@@ -18,9 +18,9 @@ LanguageCodePage=1251
 [Messages]
 
 ; *** Application titles
-SetupAppTitle=CS~console.ru
+SetupAppTitle=Autokadabra.ru
 SetupWindowTitle=%1
-UninstallAppTitle=CS~console.ru
+UninstallAppTitle=Autokadabra.ru
 UninstallAppFullTitle=%1
 
 ; *** Misc. common
@@ -89,8 +89,8 @@ BrowseDialogLabel=Выберите папку из списка и нажмите «ОК».
 NewFolderName=Новая папка
 
 ; *** "Welcome" wizard page
-WelcomeLabel1=Установка [name]
-WelcomeLabel2=Данная программа предназначена для администраторов сервера CS~console.ru.%n%nЕсли эта программа попала к вам случайно - удалите её, пользы от неё всё равно не будет.
+WelcomeLabel1=[name]
+WelcomeLabel2=Данная программа предназначена для администраторов игрового сервера Counter-Strike 1.6 портала autokadabra.ru.%n%nЕсли эта программа попала к вам случайно - удалите её, пользы от неё всё равно не будет.
 
 ; *** "Password" wizard page
 WizardPassword=Пароль

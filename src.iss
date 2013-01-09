@@ -6,14 +6,14 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{AE8CD0DD-0705-44C6-880D-E824EE0FF438}
-AppName=CS~console.ru 2.5
-AppVersion=2.5
-AppPublisher=CS~console.ru 2.5
-AppPublisherURL=http://cs-console.ru/
-AppSupportURL=http://cs-console.ru/
+AppName=Autokadabra CS Admin 1.0
+AppVersion=1.0
+AppPublisher=Autokadabra CS Admin 1.0
+AppPublisherURL=http://autokadabra.ru/
+AppSupportURL=http://autokadabra.ru/
 AppUpdatesURL=http://admin.cs-console.ru/setup.exe
 DefaultDirName={pf}/Steam
-DefaultGroupName=CS~console.ru
+DefaultGroupName=Autokadabra CS Admin
 AllowNoIcons=yes
 OutputBaseFilename=setup
 Compression=lzma
@@ -23,8 +23,8 @@ WizardSmallImageFile=small.bmp
 DisableProgramGroupPage=yes
 DisableDirPage=yes
 AllowCancelDuringInstall=yes
-UninstallDisplayName=CS~console.ru 2.5
-SetupIconFile=E:\Doc\CS\Setup admin\appIco.ico
+UninstallDisplayName=Autokadabra CS Admin 1.0
+SetupIconFile=appIco.ico
 
 [Code]
 { Глобальные переменные }
@@ -41,23 +41,23 @@ var
   MarginTop : Integer;
 
 begin
-  AppVersion := '2.5'; {Версия программы}
-  
+  AppVersion := '1.0'; {Версия программы}
+
   MarginTop := 10;
-  
+
   PageOptions := CreateCustomPage(wpWelcome, 'Сбор данных', 'Для продолжения установки необходимо ввести данные администратора.');
 
   WizardForm.WelcomeLabel2.AutoSize := True;
   WizardForm.WelcomeLabel2.Top := WizardForm.WelcomeLabel1.Top + WizardForm.WelcomeLabel1.Height + (MarginTop * 2);
-   
-  WizardForm.FinishedHeadingLabel.Caption := 'CS~console.ru';
+
+  WizardForm.FinishedHeadingLabel.Caption := 'Autokadabra.ru';
   WizardForm.FinishedHeadingLabel.AutoSize := True;
-  
+
   LabelSteamLogin := TNewStaticText.Create(PageOptions);
   LabelSteamLogin.Caption := 'Введите логин к Steam:';
   LabelSteamLogin.AutoSize := True;
   LabelSteamLogin.Parent := PageOptions.Surface;
-  
+
   SteamLogin := TNewEdit.Create(PageOptions);
   SteamLogin.Top := LabelSteamLogin.Top + LabelSteamLogin.Height + MarginTop / 2;
   SteamLogin.Width := PageOptions.SurfaceWidth div 2 - ScaleX(8);
@@ -119,7 +119,7 @@ end;
 procedure URLLabelOnClick(Sender: TObject); { Переход на сайт }
 var ErrorCode: Integer;
 begin
-  ShellExec('open', 'http://www.cs-console.ru/', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+  ShellExec('open', 'http://www.autokadabra.ru/', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
 end;
 
 procedure CurPageChanged(CurPageID: Integer);
@@ -192,11 +192,11 @@ begin
          MsgBox('Ошибка:'#13'На этом аккаунте в Steam не установлена игра Counter-Strike 1.6.'#13'Установите игру или проверьте введённый логин.', mbError, MB_OK);
          isValid := False;
        end;
-       
+
        if isValid and FileExists(SteamPath + '\unins000.exe') then { Обнаружена прошлая установка программы }
        begin
         isValid := False;
-        isUnistal := MsgBox('На этом аккаунте в Steam уже установлена программа CS~console.ru.'#13'Для продолжения установки её необходимо удалить. Сделать это сейчас?', mbConfirmation, MB_YESNO) = idYes;
+        isUnistal := MsgBox('На этом аккаунте в Steam уже установлена программа Autokadabra CS Admin.'#13'Для продолжения установки её необходимо удалить. Сделать это сейчас?', mbConfirmation, MB_YESNO) = idYes;
         if isUnistal then
         begin
           if not Exec(SteamPath + '\unins000.exe', '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then
@@ -205,19 +205,19 @@ begin
           end;
         end;
        end;
-       
+
        if isValid and (Length(SteamID.Text) = 0) then { Пустой Steam ID }
        begin
          MsgBox('Ошибка:'#13'Необходимо ввести ваш Steam ID', mbError, MB_OK);
          isValid := False;
        end;
-       
+
        if isValid and (Length(Password.Text) = 0) then { Пустой пароль }
        begin
          MsgBox('Ошибка:'#13'Необходимо ввести ваш пароль', mbError, MB_OK);
          isValid := False;
        end;
-       
+
        if isValid then begin
         WizardForm.DirEdit.Text := SteamPath;
         try
@@ -233,7 +233,7 @@ begin
           try
             XMLDoc.Send();
           except
-            MsgBox('Ошибка:'#13'Не удалось соединиться с сервером CS~console.ru.'#13'Проверьте настройки подключения к интернету и повторите попытку ещё раз.', mbError, MB_OK);
+            MsgBox('Ошибка:'#13'Не удалось соединиться с сервером аутентификации.'#13'Проверьте настройки подключения к интернету и повторите попытку ещё раз.', mbError, MB_OK);
             isValid := False;
           end;
         end;
@@ -247,14 +247,14 @@ begin
               isValid := False;
             end;
           except
-            MsgBox('Произошла ошибка на сервере CS~console.ru.'#13'Повторите попытку позже, или обратитесь к администрации сервера CS~console.ru за помощью.', mbError, MB_OK);
+            MsgBox('Произошла ошибка на сервере аутентификации.'#13'Повторите попытку позже, или обратитесь к администрации сервера CS~console.ru за помощью.', mbError, MB_OK);
             isValid := False;
           end;
         end;
       end;
     end;
   end;
-  
+
   Result := isValid;
 end;
 
@@ -282,7 +282,7 @@ begin
       if LoadStringsFromFile(UserConfig, BackupText) then begin
        SaveStringsToFile(SteamPath + '\cstrike_russian\configs\backup\userconfig.bak', BackupText, False);
       end;
-      SaveStringsToFile(UserConfig, ['', '// Создано программой CS~console.ru', '// Не изменять!', '', 'exec "configs/admin.cfg";'], True);
+      SaveStringsToFile(UserConfig, ['', '// Создано программой Autokadabra CS Admin', '// Не изменять!', '', 'exec "configs/admin.cfg";'], True);
       DeleteFile(SteamPath + '\cstrike_russian\config.cfg');
       DeleteFile(SteamPath + '\cstrike\config.cfg');
     end;
@@ -341,13 +341,13 @@ begin
   begin
     MsgBox(ErrorMessage, mbError, MB_OK);
   end;
-  
+
   if isValid then
   begin
     Delete(Steam, Length(Steam) - 8, 9);
   end;
-  
-  Result := isValid;
+
+  Result := True;
 end;
 
 procedure InitializeWizard(); { Запуск установки }
@@ -355,9 +355,9 @@ var
   URLLabel: TNewStaticText;
 begin
   CreateTheWizardPages;
-  
+
   URLLabel := TNewStaticText.Create(WizardForm);
-  URLLabel.Caption := 'www.cs-console.ru';
+  URLLabel.Caption := 'www.autokadabra.ru';
   URLLabel.Cursor := crHand;
   URLLabel.OnClick := @URLLabelOnClick;
   URLLabel.Parent := WizardForm;
@@ -368,10 +368,10 @@ begin
 end;
 
 [Languages]
-Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "russian"; MessagesFile: "Russian.isl"
 
 [Files]
-Source: "E:\Doc\CS\Setup admin\resources\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "resources\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\Документация"; Filename: "{app}\cstrike_russian\documentation\index.html"; Comment: "Читать обязательно!";
