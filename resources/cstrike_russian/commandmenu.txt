@@ -18,16 +18,13 @@
     "1" "Старт" "hltvStartRecord"
     "2" "Стоп" "hltvStopRecord"
   }
-  "3" "Подключить" {
-    "1" "Public" "hltvConnectPublic"
-    "2" "ClanWar" "hltvConnectCW"
-  }
+  "3" "Подключить" "hltvConnect"
   "4" "Остановить" "hltvStop"
   "5" "Отключить" "hltvDisconnect"
 }
 "3" "Clanwar" {
   "1" "Пароль" {
-    "1" "clanwar" "amx_cfg configs/set_pass.cfg"
+    "1" "autokadabra" "amx_cfg configs/set_pass.cfg"
     "2" "Сбросить" "amx_cfg configs/reset_pass.cfg"
   }
   "2" "Warm Up" {

@@ -6,13 +6,13 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{AE8CD0DD-0705-44C6-880D-E824EE0FF438}
-AppName=Autokadabra CS Admin 1.0
-AppVersion=1.0
-AppPublisher=Autokadabra CS Admin 1.0
+AppName=Autokadabra CS Admin 2.5
+AppVersion=2.5
+AppPublisher=Autokadabra CS Admin 2.5
 AppPublisherURL=http://autokadabra.ru/
 AppSupportURL=http://autokadabra.ru/
 AppUpdatesURL=http://admin.cs-console.ru/setup.exe
-DefaultDirName={pf}/Steam
+DefaultDirName={pf}/Counter-Strike
 DefaultGroupName=Autokadabra CS Admin
 AllowNoIcons=yes
 OutputBaseFilename=setup
@@ -21,117 +21,124 @@ SolidCompression=yes
 WizardImageFile=avatar.bmp
 WizardSmallImageFile=small.bmp
 DisableProgramGroupPage=yes
-DisableDirPage=yes
+DisableDirPage=no
 AllowCancelDuringInstall=yes
-UninstallDisplayName=Autokadabra CS Admin 1.0
+UninstallDisplayName=Autokadabra CS Admin 2.5
 SetupIconFile=appIco.ico
 
 [Code]
 { Глобальные переменные }
 var
   Steam, SteamPath, AppVersion: String;
+  HasSteam: Boolean;
   PageOptions: TWizardPage;
-  SteamLogin, SteamID: TNewEdit;
+  NickName, SteamID: TNewEdit;
   Password: TPasswordEdit;
-  LabelSteamLogin, LabelSteamLoginTip, LabelSteamID, LabelSteamIDTip, LabelPassword, LabelPasswordTip, LabelWait: TNewStaticText;
+  LabelWait: TNewStaticText;
   XMLDocumentElement: Variant;
 
-procedure CreateTheWizardPages; { Интерфейс страницы настроек }
+{ Интерфейс страницы авторизации }
+procedure CreateTheWizardPage;
 var
-  MarginTop : Integer;
+  MarginTop, WidthInput: Integer;
+  Caption, LabelNickName, LabelNickNameTip, LabelSteamID, LabelSteamIDTip, LabelPassword, LabelPasswordTip: TNewStaticText;
 
 begin
-  AppVersion := '1.0'; {Версия программы}
-
   MarginTop := 10;
 
-  PageOptions := CreateCustomPage(wpWelcome, 'Сбор данных', 'Для продолжения установки необходимо ввести данные администратора.');
+  PageOptions := CreateCustomPage(wpWelcome, 'Авторизация', 'Заполните поля, необходимые для авторизации на игровом сервере.');
 
-  WizardForm.WelcomeLabel2.AutoSize := True;
-  WizardForm.WelcomeLabel2.Top := WizardForm.WelcomeLabel1.Top + WizardForm.WelcomeLabel1.Height + (MarginTop * 2);
+  WidthInput := PageOptions.SurfaceWidth div 2 - ScaleX(8);
+  {LabelLoginSteam := TNewStaticText.Create(PageOptions);
+  LabelLoginSteam.Caption := 'Введите логин к Steam:';
+  LabelLoginSteam.AutoSize := True;
+  LabelLoginSteam.Parent := PageOptions.Surface;
 
-  WizardForm.FinishedHeadingLabel.Caption := 'Autokadabra.ru';
-  WizardForm.FinishedHeadingLabel.AutoSize := True;
-
-  LabelSteamLogin := TNewStaticText.Create(PageOptions);
-  LabelSteamLogin.Caption := 'Введите логин к Steam:';
-  LabelSteamLogin.AutoSize := True;
-  LabelSteamLogin.Parent := PageOptions.Surface;
-
-  SteamLogin := TNewEdit.Create(PageOptions);
-  SteamLogin.Top := LabelSteamLogin.Top + LabelSteamLogin.Height + MarginTop / 2;
-  SteamLogin.Width := PageOptions.SurfaceWidth div 2 - ScaleX(8);
-  SteamLogin.Parent := PageOptions.Surface;
-
-  LabelSteamLoginTip := TNewStaticText.Create(PageOptions);
-  LabelSteamLoginTip.Caption := 'Его вы вводите в поле Login,'#13'когда подключаетесь к сети Steam.';
-  LabelSteamLoginTip.AutoSize := True;
-  LabelSteamLoginTip.Top := SteamLogin.Top;
-  LabelSteamLoginTip.Left := SteamLogin.Left + SteamLogin.Width + MarginTop;
-  LabelSteamLoginTip.Font.Color := clGray;
-  LabelSteamLoginTip.Parent := PageOptions.Surface;
+  LoginSteam := TNewEdit.Create(PageOptions);
+  LoginSteam.Top := LabelLoginSteam.Top + LabelLoginSteam.Height + MarginTop / 2;
+  LoginSteam.Width := PageOptions.SurfaceWidth div 2 - ScaleX(8);
+  LoginSteam.Parent := PageOptions.Surface;}
 
   LabelSteamID := TNewStaticText.Create(PageOptions);
-  LabelSteamID.Caption := 'Введите ваш Steam ID:';
+  LabelSteamID.Caption := 'Steam ID:';
   LabelSteamID.AutoSize := True;
-  LabelSteamID.Top := SteamLogin.Top + SteamLogin.Height + (MarginTop * 2);
   LabelSteamID.Parent := PageOptions.Surface;
 
   SteamID := TNewEdit.Create(PageOptions);
   SteamID.Top := LabelSteamID.Top + LabelSteamID.Height + MarginTop / 2;
-  SteamID.Width := SteamLogin.Width;
+  SteamID.Width := WidthInput;
   SteamID.Parent := PageOptions.Surface;
 
   LabelSteamIDTip := TNewStaticText.Create(PageOptions);
-  LabelSteamIDTip.Caption := 'Пример: STEAM_0:0:12345678'#13'Узнать его можно набрав в консоли'#13'status, когда находитесь на сервере.';
+  LabelSteamIDTip.Caption := 'Пример: STEAM_0:0:12345678'#13'Узнать его можно набрав в консоли'#13'«status», когда находитесь на сервере.';
   LabelSteamIDTip.AutoSize := True;
   LabelSteamIDTip.Top := SteamID.Top;
-  LabelSteamIDTip.Left := SteamID.Left + SteamID.Width + MarginTop;
+  LabelSteamIDTip.Left := SteamID.Left + WidthInput + MarginTop;
   LabelSteamIDTip.Font.Color := clGray;
   LabelSteamIDTip.Parent := PageOptions.Surface;
 
+  LabelNickName := TNewStaticText.Create(PageOptions);
+  LabelNickName.Caption := 'Ник:';
+  LabelNickName.AutoSize := True;
+  LabelNickName.Top := SteamID.Top + SteamID.Height + MarginTop * 2;
+  LabelNickName.Parent := PageOptions.Surface;
+
+  NickName := TNewEdit.Create(PageOptions);
+  NickName.Top := LabelNickName.Top + LabelNickName.Height + MarginTop / 2;
+  NickName.Width := WidthInput;
+  NickName.Parent := PageOptions.Surface;
+
+  LabelNickNameTip := TNewStaticText.Create(PageOptions);
+  LabelNickNameTip.Caption := 'Ваше имя в игре.';
+  LabelNickNameTip.AutoSize := True;
+  LabelNickNameTip.Top := NickName.Top;
+  LabelNickNameTip.Left := NickName.Left + WidthInput + MarginTop;
+  LabelNickNameTip.Font.Color := clGray;
+  LabelNickNameTip.Parent := PageOptions.Surface;
+
   LabelPassword := TNewStaticText.Create(PageOptions);
-  LabelPassword.Caption := 'Введите ваш пароль:';
+  LabelPassword.Caption := 'Пароль:';
   LabelPassword.AutoSize := True;
-  LabelPassword.Top := SteamID.Top + SteamID.Height + (MarginTop * 2);
+  LabelPassword.Top := NickName.Top + NickName.Height + MarginTop * 2;
   LabelPassword.Parent := PageOptions.Surface;
 
   Password := TPasswordEdit.Create(PageOptions);
   Password.Top := LabelPassword.Top + LabelPassword.Height + MarginTop / 2;
-  Password.Width := SteamID.Width;
+  Password.Width := WidthInput;
   Password.Parent := PageOptions.Surface;
 
   LabelPasswordTip := TNewStaticText.Create(PageOptions);
-  LabelPasswordTip.Caption := 'Он был вам выдан при регистрации.';
+  LabelPasswordTip.Caption := 'Восстановить.';
   LabelPasswordTip.AutoSize := True;
   LabelPasswordTip.Top := Password.Top;
-  LabelPasswordTip.Left := Password.Left + Password.Width + MarginTop;
-  LabelPasswordTip.Font.Color := clGray;
+  LabelPasswordTip.Left := Password.Left + WidthInput + MarginTop;
+  LabelPasswordTip.Font.Color := clBlue;
+  LabelPasswordTip.Font.Style := [fsUnderline];
+  LabelPasswordTip.Cursor := crHand;
   LabelPasswordTip.Parent := PageOptions.Surface;
+
+  Caption := TNewStaticText.Create(PageOptions);
+  Caption.Caption := 'Поля ввода не являются обязательными!';
+  Caption.AutoSize := True;
+  Caption.Top := Password.Top + Password.Height + MarginTop * 2;
+  Caption.Font.Style := [fsBold];
+  Caption.Parent := PageOptions.Surface;
 
   LabelWait := TNewStaticText.Create(PageOptions);
   LabelWait.Caption := '';
   LabelWait.AutoSize := True;
-  LabelWait.Top := Password.Top + Password.Height + (MarginTop * 2);
+  LabelWait.Top := Caption.Top + Caption.Height + MarginTop * 2;
   LabelWait.Parent := PageOptions.Surface;
 end;
 
-procedure URLLabelOnClick(Sender: TObject); { Переход на сайт }
+{ Переход на сайт }
+procedure URLLabelOnClick(Sender: TObject);
 var ErrorCode: Integer;
 begin
   ShellExec('open', 'http://www.autokadabra.ru/', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
 end;
 
-procedure CurPageChanged(CurPageID: Integer);
-begin
-  case CurPageID
-    of wpReady:
-    begin
-      WizardForm.BackButton.Hide();
-    end;
-  end;
-end;
-
+{ URLEncode }
 function URLEncode(Str: String): String;
 begin
   StringChange(Str, '%', '%25');
@@ -167,89 +174,103 @@ begin
   Result := Str;
 end;
 
-function NextButtonClick(CurPageID: Integer): Boolean; { Валидация страницы настроек }
+{ Валидация страницы настроек }
+function SettingsValidation(): Boolean;
 var
   isValid, isUnistal: Boolean;
   XMLDoc: Variant;
   ResultCode: Integer;
 begin
   isValid := True;
+
+  if Length(NickName.Text) = 0 then begin { Пустой логин }
+    MsgBox('Ошибка:'#13'Необходимо ввести логин к вашему аккаунту в Steam.', mbError, MB_OK);
+    isValid := False;
+  end;
+
+  if isValid then begin
+   SteamPath := Steam + 'steamapps\' + NickName.Text + '\counter-strike';
+  end;
+
+  if isValid and not DirExists(SteamPath) then begin { Неправильный логин }
+    MsgBox('Ошибка:'#13'На этом аккаунте в Steam не установлена игра Counter-Strike 1.6.'#13'Установите игру или проверьте введённый логин.', mbError, MB_OK);
+    isValid := False;
+  end;
+
+  if isValid and FileExists(SteamPath + '\unins000.exe') then begin { Обнаружена прошлая установка программы }
+    isValid := False;
+    isUnistal := MsgBox('На этом аккаунте в Steam уже установлена программа Autokadabra CS Admin.'#13'Для продолжения установки её необходимо удалить. Сделать это сейчас?', mbConfirmation, MB_YESNO) = idYes;
+
+    if isUnistal then begin
+      if not Exec(SteamPath + '\unins000.exe', '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
+        MsgBox('Ошибка:'#13'Не удалось запустить программу удаления.'#13'Код ошибки: ' + IntToStr(ResultCode) + #13'Описание ошибки: ' + SysErrorMessage(ResultCode) + #13#13'Повторите попытку снова или запустите программу удаления вручную.', mbError, MB_OK);
+      end;
+    end;
+  end;
+
+  Result := isValid;
+end;
+
+procedure CurPageChanged(CurPageID: Integer);
+begin
   case CurPageID
-    of PageOptions.ID:
-      begin
-       if Length(SteamLogin.Text) = 0 then { Пустой логин }
-       begin
-         MsgBox('Ошибка:'#13'Необходимо ввести логин к вашему аккаунту в Steam.', mbError, MB_OK);
-         isValid := False;
-       end;
-       if isValid then
-       begin
-         SteamPath := Steam + 'steamapps\' + SteamLogin.Text + '\counter-strike';
-       end;
+    of wpReady:
+    begin
+      WizardForm.BackButton.Hide();
+    end;
+  end;
+end;
 
-       if isValid and not DirExists(SteamPath) then { Неправильный логин }
-       begin
-         MsgBox('Ошибка:'#13'На этом аккаунте в Steam не установлена игра Counter-Strike 1.6.'#13'Установите игру или проверьте введённый логин.', mbError, MB_OK);
-         isValid := False;
-       end;
+{ Обработка клика по кнопке Next }
+function NextButtonClick(CurPageID: Integer): Boolean;
+var
+  isValid, isUnistal: Boolean;
+  XMLDoc: Variant;
+  ResultCode: Integer;
+begin
+  isValid := True;
 
-       if isValid and FileExists(SteamPath + '\unins000.exe') then { Обнаружена прошлая установка программы }
-       begin
-        isValid := False;
-        isUnistal := MsgBox('На этом аккаунте в Steam уже установлена программа Autokadabra CS Admin.'#13'Для продолжения установки её необходимо удалить. Сделать это сейчас?', mbConfirmation, MB_YESNO) = idYes;
-        if isUnistal then
-        begin
-          if not Exec(SteamPath + '\unins000.exe', '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then
-          begin
-            MsgBox('Ошибка:'#13'Не удалось запустить программу удаления.'#13'Код ошибки: ' + IntToStr(ResultCode) + #13'Описание ошибки: ' + SysErrorMessage(ResultCode) + #13#13'Повторите попытку снова или запустите программу удаления вручную.', mbError, MB_OK);
-          end;
-        end;
-       end;
+  case CurPageID
+    of PageOptions.ID: begin
+      {isValid := SettingsValidation();}
 
-       if isValid and (Length(SteamID.Text) = 0) then { Пустой Steam ID }
-       begin
-         MsgBox('Ошибка:'#13'Необходимо ввести ваш Steam ID', mbError, MB_OK);
-         isValid := False;
-       end;
-
-       if isValid and (Length(Password.Text) = 0) then { Пустой пароль }
-       begin
-         MsgBox('Ошибка:'#13'Необходимо ввести ваш пароль', mbError, MB_OK);
-         isValid := False;
-       end;
-
-       if isValid then begin
+      if isValid then begin
         WizardForm.DirEdit.Text := SteamPath;
+
         try
           XMLDoc := CreateOleObject('MSXML2.ServerXMLHTTP');
-          XMLDoc.Open('GET', 'http://admin.cs-console.ru/setup.php?version=' + AppVersion + '&steamid=' + URLEncode(SteamID.Text) + '&password=' + URLEncode(Password.Text), False);
+          XMLDoc.Open('GET', 'http://admin.cs-console.ru/setup.php?version=' + AppVersion + '&steamid=' + URLEncode(SteamID.Text) + '&nickname=' + URLEncode(NickName.Text) + '&password=' + GetMD5OfString(Password.Text), False);
         except
           MsgBox('Ошибка:'#13'На Вашем компьютере не установлена или повреждена библиотека MSXML.'#13'Посетите сайт www.microsoft.com или обратитесь к системному администратору для исправления этой ошибки.', mbError, MB_OK);
           isValid := False;
         end;
-         if isValid then begin
+
+        if isValid then begin
           LabelWait.Caption := 'Подождите, идет проверка данных...';
           LabelWait.Refresh();
+
           try
             XMLDoc.Send();
           except
-            MsgBox('Ошибка:'#13'Не удалось соединиться с сервером аутентификации.'#13'Проверьте настройки подключения к интернету и повторите попытку ещё раз.', mbError, MB_OK);
+            MsgBox('Ошибка:'#13'Не удалось соединиться с сервером авторизации.'#13'Проверьте настройки подключения к интернету и повторите попытку ещё раз.', mbError, MB_OK);
             isValid := False;
           end;
         end;
-        LabelWait.Caption := '';
-        LabelWait.Refresh();
-        if isValid then begin
-          try
-            XMLDocumentElement := XMLDoc.responseXML.documentElement;
-            if XMLDocumentElement.nodeName = 'error' then begin { Неправильные данные }
-              MsgBox('Ошибка:'#13 + XMLDocumentElement.firstChild.nodeValue, mbError, MB_OK);
-              isValid := False;
-            end;
-          except
-            MsgBox('Произошла ошибка на сервере аутентификации.'#13'Повторите попытку позже, или обратитесь к администрации сервера CS~console.ru за помощью.', mbError, MB_OK);
+      end;
+
+      LabelWait.Caption := '';
+      LabelWait.Refresh();
+
+      if isValid then begin
+        try
+          XMLDocumentElement := XMLDoc.responseXML.documentElement;
+          if XMLDocumentElement.nodeName = 'error' then begin { Неправильные данные }
+            MsgBox('Ошибка:'#13 + XMLDocumentElement.firstChild.nodeValue, mbError, MB_OK);
             isValid := False;
           end;
+        except
+          MsgBox('Произошла ошибка на сервере авторизации.'#13'Повторите попытку позже, или обратитесь к администрации сервера CS~console.ru за помощью.', mbError, MB_OK);
+          isValid := False;
         end;
       end;
     end;
@@ -265,26 +286,26 @@ var
   UserConfig: String;
   BackupText: TArrayOfString;
 begin
-  case CurStep
-    of ssPostInstall: begin {Изменяем конфигурационные файлы}
-      for i := 0 to XMLDocumentElement.childNodes.length - 1 do begin
-        Node := XMLDocumentElement.childNodes[i];
-        if (Node.nodeType = 1) and (Node.nodeName = 'file') then begin
-          for l := 0 to Node.childNodes.length - 1 do begin
-            Line := Node.childNodes[l];
-            if (Line.nodeType = 1) and (Line.nodeName = 'line') then begin
-              SaveStringsToFile(SteamPath + '\cstrike_russian\configs\' + Node.getAttribute('src'), [Line.firstChild.nodeValue], True);
-            end;
+  case CurStep of
+    ssPostInstall: begin {Изменяем конфигурационные файлы}
+    for i := 0 to XMLDocumentElement.childNodes.length - 1 do begin
+      Node := XMLDocumentElement.childNodes[i];
+      if (Node.nodeType = 1) and (Node.nodeName = 'file') then begin
+        for l := 0 to Node.childNodes.length - 1 do begin
+          Line := Node.childNodes[l];
+          if (Line.nodeType = 1) and (Line.nodeName = 'line') then begin
+            SaveStringsToFile(SteamPath + '\cstrike_russian\configs\' + Node.getAttribute('src'), [Line.firstChild.nodeValue], True);
           end;
         end;
       end;
-      UserConfig := SteamPath + '\cstrike_russian\userconfig.cfg';
-      if LoadStringsFromFile(UserConfig, BackupText) then begin
-       SaveStringsToFile(SteamPath + '\cstrike_russian\configs\backup\userconfig.bak', BackupText, False);
-      end;
-      SaveStringsToFile(UserConfig, ['', '// Создано программой Autokadabra CS Admin', '// Не изменять!', '', 'exec "configs/admin.cfg";'], True);
-      DeleteFile(SteamPath + '\cstrike_russian\config.cfg');
-      DeleteFile(SteamPath + '\cstrike\config.cfg');
+    end;
+    UserConfig := SteamPath + '\cstrike_russian\userconfig.cfg';
+    if LoadStringsFromFile(UserConfig, BackupText) then begin
+      SaveStringsToFile(SteamPath + '\cstrike_russian\configs\backup\userconfig.bak', BackupText, False);
+    end;
+    SaveStringsToFile(UserConfig, ['', '// Создано программой Autokadabra CS Admin', '// Не изменять!', '', 'exec "configs/admin.cfg";'], True);
+    DeleteFile(SteamPath + '\cstrike_russian\config.cfg');
+    DeleteFile(SteamPath + '\cstrike\config.cfg');
     end;
     ssDone: begin {Открываем readme}
       ShellExec('open', ExpandConstant('{app}\cstrike_russian\documentation\index.html'), '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
@@ -292,19 +313,24 @@ begin
   end;
 end;
 
+{ Восстановление конфигов из backup-а }
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
-var BackupText: TArrayOfString;
-var Backup: Boolean;
-var AppPath: String;
+var
+ BackupText: TArrayOfString;
+ Backup: Boolean;
+ AppPath: String;
 begin
   AppPath := ExpandConstant('{app}');
   if CurUninstallStep = usUninstall then begin
     Backup := LoadStringsFromFile(AppPath + '\cstrike_russian\configs\Backup\userconfig.bak', BackupText);
+
     if Backup then begin
       SaveStringsToFile(AppPath + '\cstrike_russian\userconfig.cfg', BackupText, False);
+
       DeleteFile(AppPath + '\cstrike_russian\configs\Backup\userconfig.bak');
       DeleteFile(AppPath + '\cstrike_russian\config.cfg');
       DeleteFile(AppPath + '\cstrike\config.cfg');
+
       RemoveDir(AppPath + '\cstrike_russian\configs\Backup\');
     end;
   end else if CurUninstallStep = usPostUninstall then begin
@@ -312,50 +338,56 @@ begin
   end;
 end;
 
+{ Тихая отмена установки }
 procedure CancelButtonClick(CurPage: Integer; var Cancel, Confirm: Boolean);
 begin
   Confirm := False;
   Cancel := True;
 end;
 
-function InitializeSetup(): Boolean; { Проверка наличия Steam }
+function InitializeSetup(): Boolean;
 var
-  ErrorMessage: String;
-  isValid, isInstall: Boolean;
+  isValid: Boolean;
 begin
-  isValid := True;
-
-  ErrorMessage := 'Ошибка:'#13'На вашем компьютере не установлен Steam-клиент.'#13'Установите Steam и запустите программу установки повторно.';
-
+  { Проверка наличия Steam }
   isValid := RegQueryStringValue(HKEY_CLASSES_ROOT, 'steam\Shell\Open\Command', '', Steam);
-  if not isValid then
-  begin
-    MsgBox(ErrorMessage, mbError, MB_OK);
-  end;
 
-  Delete(Steam, 1, 1);
-  Delete(Steam, Length(Steam) - 5, 6);
+  if isValid then
+  begin
+    Delete(Steam, 1, 1);
+    Delete(Steam, Length(Steam) - 5, 6);
+  end;
 
   isValid := FileExists(Steam);
-  if not isValid then
-  begin
-    MsgBox(ErrorMessage, mbError, MB_OK);
-  end;
 
   if isValid then
   begin
     Delete(Steam, Length(Steam) - 8, 9);
   end;
 
+  HasSteam := isValid;
   Result := True;
 end;
 
-procedure InitializeWizard(); { Запуск установки }
+{ Запуск установки }
+procedure InitializeWizard();
 var
-  URLLabel: TNewStaticText;
+  hasSteamStr: String;
+  URLLabel, AuthTypeLabel: TNewStaticText;
+  PageWelcome: TWizardPage;
+  AuthTypeSteam, AuthTypeLogin: TNewRadioButton;
 begin
-  CreateTheWizardPages;
+  AppVersion := '2.5'; {Версия программы}
+  PageWelcome := PageFromID(wpWelcome);
 
+  { Кастомизация страницы приветствия }
+  WizardForm.WelcomeLabel2.AutoSize := True;
+  WizardForm.WelcomeLabel2.Top := WizardForm.WelcomeLabel1.Top + WizardForm.WelcomeLabel1.Height;
+
+  WizardForm.FinishedHeadingLabel.Caption := 'Autokadabra.ru';
+  WizardForm.FinishedHeadingLabel.AutoSize := True;
+
+  { Ссылка на сайт сервера }
   URLLabel := TNewStaticText.Create(WizardForm);
   URLLabel.Caption := 'www.autokadabra.ru';
   URLLabel.Cursor := crHand;
@@ -365,6 +397,9 @@ begin
   URLLabel.Font.Color := clBlue;
   URLLabel.Top := WizardForm.CancelButton.Top;
   URLLabel.Left := WizardForm.ClientWidth - WizardForm.CancelButton.Left - WizardForm.CancelButton.Width;
+
+  { Создание страницы авторизации }
+  CreateTheWizardPage;
 end;
 
 [Languages]
@@ -374,17 +409,11 @@ Name: "russian"; MessagesFile: "Russian.isl"
 Source: "resources\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{group}\Документация"; Filename: "{app}\cstrike_russian\documentation\index.html"; Comment: "Читать обязательно!";
+Name: "{group}\Подключиться к серверу"; Filename: "steam://connect/92.38.225.160:27016/"; IconFilename: "{app}\cstrike\game.ico";
 
-Name: "{group}\Подключиться к серверу\Public"; Filename: "steam://connect/cs-console.ru/"; IconFilename: "{app}\cstrike\game.ico";
-Name: "{group}\Подключиться к серверу\ClanWar"; Filename: "steam://connect/cw.cs-console.ru/"; IconFilename: "{app}\cstrike\game.ico";
-
-Name: "{group}\Веб-ресурсы\FTP"; Filename: "ftp://cs-console.ru/";
-Name: "{group}\Веб-ресурсы\Web-админка"; Filename: "http://amx.cs-console.ru/";
-Name: "{group}\Веб-ресурсы\Группа в Steam"; Filename: "http://steamcommunity.com/groups/cs-console";
-Name: "{group}\Веб-ресурсы\Группа ВКонтакте"; Filename: "http://vkontakte.ru/club16065099";
-Name: "{group}\Веб-ресурсы\Сайт CS~console.ru"; Filename: "http://cs-console.ru/";
-Name: "{group}\Веб-ресурсы\Скачать последнюю версию"; Filename: "http://admin.cs-console.ru/setup.exe";
+Name: "{group}\Autokadabra.ru"; Filename: "http://autokadabra.ru/";
+Name: "{group}\Скачать демо"; Filename: "ftp://cs-console.ru/autokadabra";
+Name: "{group}\Скачать последнюю версию"; Filename: "http://admin.cs-console.ru/autokadabra.exe";
 
 Name: "{group}\Удалить программу CS~console.ru"; Filename: "{uninstallexe}"; Comment: "Удаление программы CS~console.ru с вашего компьютера";
 
